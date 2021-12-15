@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import ThemeSelector from "./components/ThemeSelector";
+import { useTheme } from "./hooks/useTheme";
+import Create from "./pages/create/Create";
+import Home from "./pages/home/Home";
+import Recipe from "./pages/recipe/Recipe";
+import Search from "./pages/search/Search";
 
 function App() {
+  const { mode } = useTheme();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={`App ${mode}`}>
+      <BrowserRouter>
+        <Navbar />
+        <ThemeSelector />
+        <Routes>
+          <Route exact path="/" element={<Home />}></Route>
+          <Route path="/recipes/:id" element={<Recipe />}></Route>
+          <Route path="/cook-recipe" element={<Create />}></Route>
+          <Route path="/search" element={<Search />}></Route>
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
